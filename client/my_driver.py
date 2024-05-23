@@ -22,25 +22,56 @@ class MyDriver(Driver):
         
         # Load model and move to GPU if available
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = CarControlModel().to(self.device)
-        self.model.load_state_dict(torch.load('./pytocl/models/car_control_model.pth'))
+        self.model = CarControlModel(68, 3).to(self.device)
+        self.model.load_state_dict(torch.load('./pytocl/models/model.pth'))
         self.model.eval()
+
+    def clip(self, v, lo, hi):
+        if v < lo:
+            return lo
+        elif v > hi:
+            return hi
+        else:
+            return v
+
+    def clip_to_limits(self, accel, steer, brake):
+        """There pretty much is never a reason to send the server
+        something like (steer 9483.323). This comes up all the time
+        and it's probably just more sensible to always clip it than to
+        worry about when to. The "clip" command is still a snakeoil
+        utility function, but it should be used only for non standard
+        things or non obvious limits (limit the steering to the left,
+        for example). For normal limits, simply don't worry about it."""
+        # print(f"Before clipping: Accelerator={accel:.2f}, Brake={brake:.2f}, Steering={steer:.2f}")
+        return self.clip(accel, 0, 1), self.clip(steer, -1, 1) * -1, self.clip(brake, 0, 1)
 
     def transform_car_state(self, carstate: State, scaler):
         # Extract relevant features from carstate object
-        features = {
-            'angle': [carstate.angle],
-            'rpm': [carstate.rpm],
-            'speed_x': [carstate.speed_x / MPS_PER_KMH],
-            'speed_y': [carstate.speed_y / MPS_PER_KMH],
-            'track_position': [carstate.distance_from_center]
-        }
+        features = dict()
+        features['angle'] = [(carstate.angle * np.pi) / 180.0] # Convert to radian
+        features['distRaced'] = [carstate.distance_raced]
+        features['lastLapTime'] = [carstate.last_lap_time]
+        for i in range(36):
+            features[f'opponent{i+1}'] = [carstate.opponents[i]]
+        features['rpm'] = [carstate.rpm]
+        features['speedX'] = [carstate.speed_x / MPS_PER_KMH]
+        features['speedY'] = [carstate.speed_y / MPS_PER_KMH]
+        features['speedZ'] = [carstate.speed_z / MPS_PER_KMH]
+        for i in range(19):
+            features[f'track{i+1}'] = [carstate.distances_from_edge[i]]
+        features['trackPos'] = [carstate.distance_from_center]
+        for i in range(4):
+            features[f'wheelSpinVel{i+1}'] = [(carstate.wheel_velocities[i] * np.pi) / 180.0]
+        features['z'] = [carstate.z]
+
 
         # Create a DataFrame with the correct feature names
         features_df = pd.DataFrame(features)
 
         # Normalize features using the scaler
         normalized_features = scaler.transform(features_df)
+        for key in features:
+            print(f"{key}: {features[key]}")
         
         # Convert to PyTorch tensor and move to GPU if available
         tensor_features = torch.tensor(normalized_features, dtype=torch.float32).to(self.device)
@@ -61,7 +92,11 @@ class MyDriver(Driver):
         # command.accelerator = 99999
 
         # Get model predictions
-        # prediction = self.predict(carstate)
+        prediction = self.predict(carstate)
+        accel, steer, brake = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2])
+        command.accelerator = accel
+        command.steering = steer
+        command.brake = brake
         # command.accelerator = (float(prediction[0][0]) + 1) / 2
         # command.brake = 0.0
         # # command.brake = float(prediction[0][1])
@@ -72,15 +107,26 @@ class MyDriver(Driver):
         # # command.brake = float(prediction[0][1])
         # # command.steering = float(prediction[0][2])
 
-        # # print(f"Predicted: Accelerator={command.accelerator:.2f}, Brake={command.brake:.2f}, Steering={command.steering:.2f}")
+        # gear = carstate.gear
+        # rpm = carstate.rpm
+        # # logic for reverse start
+        # if rpm >= 9200 and gear < 6:
+        #     command.gear += 1
+        # elif rpm <= 5500 and gear > 1:
+        #     command.gear -= 1
 
-        # # Gear shifting logic
+        print(f"Predicted: Accelerator={command.accelerator:.2f}, Brake={command.brake:.2f}, Steering={command.steering:.2f}")
+
+        # Gear shifting logic
         # if carstate.rpm > 8000:
         #     command.gear = carstate.gear + 1
         # elif carstate.rpm < 2500:
         #     command.gear = carstate.gear - 1
         # else:
         #     command.gear = carstate.gear or 1
+        command.gear = 1
+        # command.brake = 0
+
 
         # # Ensure gear is within valid range
         # command.gear = max(1, min(6, command.gear))
