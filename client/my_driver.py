@@ -23,7 +23,7 @@ class MyDriver(Driver):
             self.scaler = pickle.load(f)
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = CarControlModel(4, 3).to(self.device)
+        self.model = CarControlModel(67, 3).to(self.device)
         self.model.load_state_dict(torch.load('./pytocl/models/model.pth'))
         self.model.eval()
 
@@ -41,26 +41,31 @@ class MyDriver(Driver):
 
     def transform_car_state(self, carstate: State, scaler):
         features = dict()
-        features['angle'] = [(carstate.angle * np.pi) / 180.0] 
-        # features['distRaced'] = [carstate.distance_raced]
+        features['Angle'] = [(carstate.angle * np.pi) / 180.0] 
+        features[' DistanceCovered'] = [carstate.distance_raced]
         # features['lastLapTime'] = [carstate.last_lap_time]
-        # for i in range(36):
-        #     features[f'opponent{i+1}'] = [carstate.opponents[i]]
-        # features['rpm'] = [carstate.rpm]
-        features['speedX'] = [carstate.speed_x / MPS_PER_KMH]
-        features['speedY'] = [carstate.speed_y / MPS_PER_KMH]
-        # features['speedZ'] = [carstate.speed_z / MPS_PER_KMH]
-        features['trackPos'] = [carstate.distance_from_center]
-        # for i in range(4):
-        #     features[f'wheelSpinVel{i+1}'] = [(carstate.wheel_velocities[i] * np.pi) / 180.0]
-        # features['z'] = [carstate.z]
+        features[" Opponent_1"] = [carstate.opponents[0]]
+        for i in range(1, 36):
+            features[f'Opponent_{i+1}'] = [carstate.opponents[i]]
+        features[' RPM'] = [carstate.rpm]
+        features[' SpeedX'] = [carstate.speed_x / MPS_PER_KMH]
+        features[' SpeedY'] = [carstate.speed_y / MPS_PER_KMH]
+        features[' SpeedZ'] = [carstate.speed_z / MPS_PER_KMH]
+        features[" Track_1"] = [carstate.distances_from_edge[0]]
+        for i in range(1, 19):
+            features[f'Track_{i+1}'] = [carstate.distances_from_edge[i]]
+        features['TrackPosition'] = [carstate.distance_from_center]
+        features[" WheelSpinVelocity_1"] = [(carstate.wheel_velocities[0] * np.pi) / 180.0]
+        for i in range(1, 4):
+            features[f'WheelSpinVelocity_{i+1}'] = [(carstate.wheel_velocities[i] * np.pi) / 180.0]
+        features['Z'] = [carstate.z]
 
         features_df = pd.DataFrame(features)
         normalized_features = scaler.transform(features_df)
         tensor_features = torch.tensor(normalized_features, dtype=torch.float32).to(self.device)
         
-        for tensor in tensor_features[0]:
-            print(tensor)
+        # for tensor in tensor_features[0]:
+        #     print(tensor)
         return tensor_features
 
     def predict(self, carstate: State):
@@ -74,8 +79,8 @@ class MyDriver(Driver):
     def drive(self, carstate: State) -> Command:
         command = Command()
         prediction = self.predict(carstate)
-        accel, steer, brake = prediction[0][0], prediction[0][1], prediction[0][2]
-        # accel, steer, brake = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2])
+        # accel, brake, steer = prediction[0][0], prediction[0][1], prediction[0][2]
+        accel, brake, steer = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2])
         command.accelerator = accel
         command.steering = steer
         command.brake = brake
