@@ -40,8 +40,8 @@
 | `Alpine 2`             | 3    | 10                | Sam    | `alpine2`           | :white_check_mark:    |
 | `Brondehach`           | 3    | 10                | Sam    | `brondehach`        | :white_check_mark:    |
 | `Corkscrew`            | 3    | 10                | Sam    | `corkscrew`         | :white_check_mark:    |
-| `E-Track 1`            |      |                   | Sam    | `etrack1`           | :black_square_button: |
-| `E-Track 2`            |      |                   | Sam    | `etrack2`           | :black_square_button: |
+| `E-Track 1`            | X    | X                 | Sam    | `etrack1`           | :black_square_button: |
+| `E-Track 2`            | X    | X                 | Sam    | `etrack2`           | :black_square_button: |
 | `E-Track 3`            | 3    | 9                 | Jaouad | `etrack3`           | :white_check_mark:    |
 | `E-Track 4`            | 3    | 5                 | Jaouad | `etrack4`           | :white_check_mark:    |
 | `E-Track 6`            | 3    | 8                 | Jaouad | `etrack6`           | :white_check_mark:    |
@@ -53,15 +53,15 @@
 | `Olethros Road 1`      | 3    | 3                 | Sabri  | `olethrosroad1`     | :white_check_mark:    |
 | `Ruudskogen`           | 3    | 7                 | Sabri  | `ruudskogen`        | :white_check_mark:    |
 | `Spring`               | 1    | 4                 | Sabri  | `spring`            | :white_check_mark:    |
-| `Street 1`             | 3    | 5                 | Sabri  | `street1`           | :white_check_mark     |
+| `Street 1`             | 3    | 5                 | Sabri  | `street1`           | :white_check_mark:    |
 | `Wheel 1`              | 3    | 6                 | Sabri  | `wheel1`            | :white_check_mark:    |
 | `Wheel 2`              | 3    | 7                 | Sabri  | `wheel2`            | :white_check_mark:    |
-| `A-Speedway`           |      |                   | Sam    | `aspeedway`         | :black_square_button: |
+| `A-Speedway`           | 3    | 3                 | Sabri  | `aspeedway`         | :white_check_mark:    |
 | `B-Speedway`           | 3    | 8                 | Jaouad | `bspeedway`         | :white_check_mark:    |
 | `C-Speedway`           | 3    | 5                 | Jaouad | `cspeedway`         | :white_check_mark:    |
 | `D-Speedway`           | 3    | 10                | Jaouad | `dspeedway`         | :white_check_mark:    |
 | `E-Speedway`           | 3    | 2                 | Jaouad | `espeedway`         | :white_check_mark:    |
 | `E-Track 5`            | 3    | 6                 | Jaouad | `etrack5`           | :white_check_mark:    |
 | `F-Speedway`           | 3    | 2                 | Sabri  | `fspeedway`         | :white_check_mark:    |
-| `G-Speedway`           | 3    | 5                 | Sabri  | `gspeedway`         | :black_square_button: |
-| `Michigan Speedway`    |      |                   | Sabri  | `michiganspeedway`  | :black_square_button: |
+| `G-Speedway`           | 3    | 5                 | Sabri  | `gspeedway`         | :white_check_mark:    |
+| `Michigan Speedway`    | 3    | 9                 | Sabri  | `michiganspeedway`  | :white_check_mark:    |
