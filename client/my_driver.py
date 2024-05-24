@@ -23,7 +23,7 @@ class MyDriver(Driver):
             self.scaler = pickle.load(f)
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = CarControlModel(67, 3).to(self.device)
+        self.model = CarControlModel(67, 4).to(self.device)
         self.model.load_state_dict(torch.load('./pytocl/models/model.pth'))
         self.model.eval()
 
@@ -36,14 +36,17 @@ class MyDriver(Driver):
             return v
 
     def clip_to_limits(self, accel, steer, brake):
-        print(f"Before clipping: Accelerator={accel:.2f}, Brake={brake:.2f}, Steering={steer:.2f}")
         return self.clip(accel, 0, 1), self.clip(steer, -1, 1), self.clip(brake, 0, 1)
+    
+    def convert_gear_value_back(self, x):
+        return round((x * 7) - 1)
 
     def transform_car_state(self, carstate: State, scaler):
         features = dict()
         features['Angle'] = [(carstate.angle * np.pi) / 180.0] 
         features[' DistanceCovered'] = [carstate.distance_raced]
         # features['lastLapTime'] = [carstate.last_lap_time]
+        # features[' Gear'] = [carstate.gear]
         features[" Opponent_1"] = [carstate.opponents[0]]
         for i in range(1, 36):
             features[f'Opponent_{i+1}'] = [carstate.opponents[i]]
@@ -85,7 +88,12 @@ class MyDriver(Driver):
         command.steering = steer
         command.brake = brake
 
-        print(f"Accelerator={command.accelerator:.2f}, Brake={command.brake:.2f}, Steering={command.steering:.2f}")
+        clutch = prediction[0][3]
+        command.clutch = clutch
+        # command.gear = self.convert_gear_value_back(gear)
+        # print(carstate.angle)
+
+        # print(f"Accelerator={command.accelerator:.2f}, Brake={command.brake:.2f}, Steering={command.steering:.2f}, Clutch={command.clutch:.2f}")
 
         # self.steer(carstate, 0, command)
 
