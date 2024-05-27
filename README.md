@@ -33,24 +33,24 @@
 
 ### Data Collection Progress
 *csv naming convention: `trackname_laps_startingPosition_version.csv` (e.g. `aalborg_3_6_0.csv`)*
-| Track name             | Laps | Starting Position | csv_name            | Collected             |
-| ---------------------- | ---- | ----------------- | ------------------- | --------------------- |
-| `Aalborg`              | 35   | 1                 | `aalborg`           | :white_check_mark:    |
-| `Alpine 1`             | 27   | 10                | `alpine1`           | :white_check_mark:    |
-| `Alpine 2`             | 28   | 10                | `alpine2`           | :white_check_mark:    |
-| `Brondehach`           | 30   | 10                | `brondehach`        | :white_check_mark:    |
-| `Corkscrew`            | 30   | 10                | `corkscrew`         | :white_check_mark:    |
-| `E-Track 3`            | 20   | 10                | `etrack3`           | :white_check_mark:    |
-| `E-Track 4`            | 20   | 10                | `etrack4`           | :white_check_mark:    |
-| `E-Track 6`            | 30   | 10                | `etrack6`           | :white_check_mark:    |
-| `E-Road`               | 30   | 10                | `eroad`             | :white_check_mark:    |
-| `Forza`                | 25   | 10                | `forza`             | :white_check_mark:    |
-| `CG Speedway number 1` | 30   | 10                | `cgspeedwaynumber1` | :white_check_mark:    |
-| `CG track 2`           | 25   | 10                | `cgtrack2`          | :white_check_mark:    |
-| `CG track 3`           | 30   | 10                | `cgtrack3`          | :white_check_mark:    |
-| `Olethros Road 1`      | 25   | 10                | `olethrosroad1`     | :white_check_mark:    |
-| `Ruudskogen`           | 30   | 10                | `ruudskogen`        | :white_check_mark:    |
-| `Spring`               | 7    | 10                | `spring`            | :white_check_mark:    |
-| `Street 1`             | 30   | 7                 | `street1`           | :white_check_mark:    |
-| `Wheel 1`              | 30   | 10                | `wheel1`            | :white_check_mark:    |
-| `Wheel 2`              | 30   | 8                 | `wheel2`            | :white_check_mark:    |
+| Track name             | Laps | Starting Position | csv_name            | Collected          |
+| ---------------------- | ---- | ----------------- | ------------------- | ------------------ |
+| `Aalborg`              | 35   | 1                 | `aalborg`           | :white_check_mark: |
+| `Alpine 1`             | 47   | 10 & 7            | `alpine1`           | :white_check_mark: |
+| `Alpine 2`             | 48   | 10 & 5            | `alpine2`           | :white_check_mark: |
+| `Brondehach`           | 30   | 10                | `brondehach`        | :white_check_mark: |
+| `Corkscrew`            | 30   | 10                | `corkscrew`         | :white_check_mark: |
+| `E-Track 3`            | 20   | 10                | `etrack3`           | :white_check_mark: |
+| `E-Track 4`            | 20   | 10                | `etrack4`           | :white_check_mark: |
+| `E-Track 6`            | 30   | 10                | `etrack6`           | :white_check_mark: |
+| `E-Road`               | 30   | 10                | `eroad`             | :white_check_mark: |
+| `Forza`                | 25   | 10                | `forza`             | :white_check_mark: |
+| `CG Speedway number 1` | 30   | 10                | `cgspeedwaynumber1` | :white_check_mark: |
+| `CG track 2`           | 25   | 10                | `cgtrack2`          | :white_check_mark: |
+| `CG track 3`           | 30   | 10                | `cgtrack3`          | :white_check_mark: |
+| `Olethros Road 1`      | 25   | 10                | `olethrosroad1`     | :white_check_mark: |
+| `Ruudskogen`           | 30   | 10                | `ruudskogen`        | :white_check_mark: |
+| `Spring`               | 7    | 10                | `spring`            | :white_check_mark: |
+| `Street 1`             | 30   | 7                 | `street1`           | :white_check_mark: |
+| `Wheel 1`              | 30   | 10                | `wheel1`            | :white_check_mark: |
+| `Wheel 2`              | 30   | 8                 | `wheel2`            | :white_check_mark: |
