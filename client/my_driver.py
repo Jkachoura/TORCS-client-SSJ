@@ -42,7 +42,7 @@ class MyDriver(Driver):
             return v
 
     def clip_to_limits(self, accel, steer, brake):
-        return self.clip(accel, 0, 1), self.clip(steer, -1, 1), self.clip(brake, 0, 1)
+        return self.clip(accel, 0, 1), self.clip(brake, 0, 1), self.clip(steer, -1, 1)
     
     def convert_gear_value_back(self, x):
         return (x * 7) - 1
@@ -74,9 +74,6 @@ class MyDriver(Driver):
         normalized_features = self.scaler.transform(features_df)
         tensor_features = torch.tensor(normalized_features, dtype=torch.float32).to(self.device)
 
-        # print("\n Features:")
-        # for i, tensor in enumerate(tensor_features[0]):
-        #     print(f"{features_df.columns[i]}: {tensor.item()}")
         return tensor_features
 
     def predict(self, carstate: State):
@@ -90,10 +87,9 @@ class MyDriver(Driver):
     def drive(self, carstate: State) -> Command:
         command = Command()
         prediction = self.predict(carstate)
-        # accel, brake, steer = prediction[0][0], prediction[0][1], prediction[0][2]
         accel, brake, steer = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2])
         command.accelerator = accel
-        command.steering = prediction[0][2]
+        command.steering = steer 
         command.brake = brake
 
         gear = self.convert_gear_value_back(prediction[0][3])
