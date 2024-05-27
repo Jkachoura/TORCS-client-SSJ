@@ -95,7 +95,7 @@ class MyDriver(Driver):
         command.gear = round(gear)
 
         # Gear shifting logic for reverse
-        if -10 < carstate.speed_x / MPS_PER_KMH < 10 and carstate.distance_raced > 10:
+        if -10 < carstate.speed_x / MPS_PER_KMH < 5 and carstate.distance_raced > 10:
             # If 50% of distance from edge values are <= 0.5
             if len([x for x in carstate.distances_from_edge if x <= 5]) >= 9:
                 print("REVERSE")
