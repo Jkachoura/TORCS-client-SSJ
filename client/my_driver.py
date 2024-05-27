@@ -1,3 +1,6 @@
+import glob
+import os
+
 import pandas as pd
 from pytocl.driver import Driver
 from pytocl.car import State, Command
@@ -9,7 +12,6 @@ import numpy as np
 
 from pytocl.pytorch_car_model import CarControlModel
 
-
 MPS_PER_KMH = 1000 / 3600  # Meters per second per kilometer per hour
 
 class MyDriver(Driver):
@@ -19,13 +21,16 @@ class MyDriver(Driver):
 
     def __init__(self, logdata=True):
         super().__init__(logdata)
-        # TODO load model and scalers with timestamp names
-        with open('./pytocl/models/scaler.pkl', 'rb') as f:
+        latest_scaler_file = max(glob.glob('../models/scaler_*.pkl'), key=os.path.getctime)
+
+        with open(latest_scaler_file, 'rb') as f:
             self.scaler = pickle.load(f)
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = CarControlModel(68, 4).to(self.device)
-        self.model.load_state_dict(torch.load('./pytocl/models/model.pth'))
+
+        latest_model_file = max(glob.glob('../models/model_*.pth'), key=os.path.getctime)
+        self.model.load_state_dict(torch.load(latest_model_file))
         self.model.eval()
 
     def clip(self, v, lo, hi):
