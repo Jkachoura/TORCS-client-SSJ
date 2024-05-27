@@ -41,7 +41,7 @@ class MyDriver(Driver):
         else:
             return v
 
-    def clip_to_limits(self, accel, steer, brake):
+    def clip_to_limits(self, accel, brake, steer):
         return self.clip(accel, 0, 1), self.clip(brake, 0, 1), self.clip(steer, -1, 1)
     
     def convert_gear_value_back(self, x):
