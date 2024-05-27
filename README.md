@@ -88,9 +88,9 @@
 | `Olethros Road 1`      | 25   | 10                | `olethrosroad1`     | :white_check_mark:    |
 | `Ruudskogen`           | 30   | 10                | `ruudskogen`        | :white_check_mark:    |
 | `Spring`               | 7    | 10                | `spring`            | :white_check_mark:    |
-| `Street 1`             |      |                   | `street1`           | :black_square_button: |
-| `Wheel 1`              |      |                   | `wheel1`            | :black_square_button: |
-| `Wheel 2`              |      |                   | `wheel2`            | :black_square_button: |
+| `Street 1`             | 30   | 7                 | `street1`           | :white_check_mark:    |
+| `Wheel 1`              | 30   | 10                | `wheel1`            | :white_check_mark:    |
+| `Wheel 2`              | 30   | 8                 | `wheel2`            | :white_check_mark:    |
 | `A-Speedway`           |      |                   | `aspeedway`         | :black_square_button: |
 | `B-Speedway`           |      |                   | `bspeedway`         | :black_square_button: |
 | `C-Speedway`           |      |                   | `cspeedway`         | :black_square_button: |
