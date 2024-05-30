@@ -50,7 +50,7 @@
 | `CG track 3`           | 60   | 10 & 05           | `cgtrack3`          | :white_check_mark: |
 | `Olethros Road 1`      | 40   | 10 & 04           | `olethrosroad1`     | :white_check_mark: |
 | `Ruudskogen`           | 55   | 10 & 07           | `ruudskogen`        | :white_check_mark: |
-| `Spring`               | 7    | 10                | `spring`            | :white_check_mark: |
-| `Street 1`             | 30   | 07                | `street1`           | :white_check_mark: |
-| `Wheel 1`              | 30   | 10                | `wheel1`            | :white_check_mark: |
-| `Wheel 2`              | 30   | 08                | `wheel2`            | :white_check_mark: |
+| `Spring`               | 16   | 10 & 04           | `spring`            | :white_check_mark: |
+| `Street 1`             | 60   | 07 & 04           | `street1`           | :white_check_mark: |
+| `Wheel 1`              | 60   | 10 & 04           | `wheel1`            | :white_check_mark: |
+| `Wheel 2`              | 60   | 08 & 04           | `wheel2`            | :white_check_mark: |
