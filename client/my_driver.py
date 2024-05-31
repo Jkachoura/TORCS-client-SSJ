@@ -17,7 +17,7 @@ MPS_PER_KMH = 1000 / 3600  # Meters per second per kilometer per hour
 
 class MyDriver(Driver):
     # Define RPM thresholds for gear shifting
-    RPM_UPSHIFT = 7000
+    RPM_UPSHIFT = 8500
     RPM_DOWNSHIFT = 3000
 
     def __init__(self, logdata=True):
@@ -28,7 +28,7 @@ class MyDriver(Driver):
             self.scaler = pickle.load(f)
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = CarControlModel(67, 3).to(self.device)
+        self.model = CarControlModel(67, 4).to(self.device)
 
         latest_model_file = max(glob.glob('../models/model_*.pth'), key=os.path.getctime)
         self.model.load_state_dict(torch.load(latest_model_file))
@@ -46,8 +46,8 @@ class MyDriver(Driver):
         else:
             return v
 
-    def clip_to_limits(self, accel, brake, steer):
-        return self.clip(accel, 0, 1), self.clip(brake, 0, 1), self.clip(steer, -1, 1)
+    def clip_to_limits(self, accel, brake, steer, clutch):
+        return self.clip(accel, 0, 1), self.clip(brake, 0, 1), self.clip(steer, -1, 1), self.clip(clutch, 0, 1)
     
     def convert_gear_value_back(self, x):
         return (x * 7) - 1
@@ -92,10 +92,11 @@ class MyDriver(Driver):
     def drive(self, carstate: State) -> Command:
         command = Command()
         prediction = self.predict(carstate)
-        accel, brake, steer = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2])
+        accel, brake, steer, clutch = self.clip_to_limits(prediction[0][0], prediction[0][1], prediction[0][2], prediction[0][3])
         command.accelerator = accel
         command.steering = steer 
         command.brake = brake
+        command.clutch = clutch
 
         # gear = self.convert_gear_value_back(prediction[0][3])
         # command.gear = round(gear)
