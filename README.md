@@ -35,20 +35,20 @@
 *csv naming convention: `trackname_laps_startingPosition_version.csv` (e.g. `aalborg_3_6_0.csv`)*
 | Track name             | Laps | Starting Position | csv_name            | Collected          |
 | ---------------------- | ---- | ----------------- | ------------------- | ------------------ |
-| `Aalborg`              | 55   | 01 & 04           | `aalborg`           | :white_check_mark: |
-| `Alpine 1`             | 47   | 10 & 07           | `alpine1`           | :white_check_mark: |
-| `Alpine 2`             | 48   | 10 & 05           | `alpine2`           | :white_check_mark: |
-| `Brondehach`           | 50   | 06 & 08           | `brondehach`        | :white_check_mark: |
-| `Corkscrew`            | 90   | 10 & 05           | `corkscrew`         | :white_check_mark: |
-| `E-Track 3`            | 50   | 10 & 06           | `etrack3`           | :white_check_mark: |
-| `E-Track 4`            | 43   | 10 & 04           | `etrack4`           | :white_check_mark: |
-| `E-Track 6`            | 59   | 10 & 04           | `etrack6`           | :white_check_mark: |
-| `E-Road`               | 60   | 10 & 07           | `eroad`             | :white_check_mark: |
-| `Forza`                | 25   | 10 & 04           | `forza`             | :white_check_mark: |
-| `CG Speedway number 1` | 60   | 10 & 08           | `cgspeedwaynumber1` | :white_check_mark: |
-| `CG track 2`           | 25   | 10 & 04           | `cgtrack2`          | :white_check_mark: |
-| `CG track 3`           | 60   | 10 & 05           | `cgtrack3`          | :white_check_mark: |
-| `Olethros Road 1`      | 40   | 10 & 04           | `olethrosroad1`     | :white_check_mark: |
+| `Aalborg`              | 85   | 01 & 04 & 07      | `aalborg`           | :white_check_mark: |
+| `Alpine 1`             | 77   | 10 & 07 & 06      | `alpine1`           | :white_check_mark: |
+| `Alpine 2`             | 78   | 10 & 05 & 08      | `alpine2`           | :white_check_mark: |
+| `Brondehach`           | 80   | 06 & 08 & 06      | `brondehach`        | :white_check_mark: |
+| `Corkscrew`            | 120  | 10 & 05 & 06      | `corkscrew`         | :white_check_mark: |
+| `E-Track 3`            | 80   | 10 & 06 & 06      | `etrack3`           | :white_check_mark: |
+| `E-Track 4`            | 73   | 10 & 04 & 06      | `etrack4`           | :white_check_mark: |
+| `E-Track 6`            | 89   | 10 & 04 & 06      | `etrack6`           | :white_check_mark: |
+| `E-Road`               | 90   | 10 & 07 & 04      | `eroad`             | :white_check_mark: |
+| `Forza`                | 85   | 10 & 04 & 06      | `forza`             | :white_check_mark: |
+| `CG Speedway number 1` | 90   | 10 & 08 & 04      | `cgspeedwaynumber1` | :white_check_mark: |
+| `CG track 2`           | 85   | 10 & 04 & 06      | `cgtrack2`          | :white_check_mark: |
+| `CG track 3`           | 90   | 10 & 05 & 08      | `cgtrack3`          | :white_check_mark: |
+| `Olethros Road 1`      | 70   | 10 & 04 & 06      | `olethrosroad1`     | :white_check_mark: |
 | `Ruudskogen`           | 55   | 10 & 07           | `ruudskogen`        | :white_check_mark: |
 | `Spring`               | 16   | 10 & 04           | `spring`            | :white_check_mark: |
 | `Street 1`             | 60   | 07 & 04           | `street1`           | :white_check_mark: |
