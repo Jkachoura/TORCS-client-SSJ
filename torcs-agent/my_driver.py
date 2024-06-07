@@ -23,8 +23,7 @@ class MyDriver(Driver):
 
     def __init__(self, logdata=True):
         super().__init__(logdata)
-        # latest_scaler_file '../models/scaler.pkl'
-        latest_scaler_file = Path('models/scaler.pkl')
+        latest_scaler_file = max(glob.glob('models/scaler_*.pkl'), key=os.path.getctime)
 
         with open(latest_scaler_file, 'rb') as f:
             self.scaler = pickle.load(f)
@@ -32,7 +31,7 @@ class MyDriver(Driver):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = CarControlModel(67, 4).to(self.device)
 
-        latest_model_file = Path('models/model.pth')
+        latest_model_file = max(glob.glob('models/model_*.pth'), key=os.path.getctime)
         self.model.load_state_dict(torch.load(latest_model_file, map_location=self.device))
         self.model.eval()
 
