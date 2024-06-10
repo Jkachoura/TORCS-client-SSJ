@@ -8,9 +8,7 @@ from pytocl.car import State, Command
 
 import torch
 import pickle
-from sklearn.preprocessing import StandardScaler
 import numpy as np
-from pathlib import Path
 
 from pytocl.pytorch_car_model import CarControlModel
 
@@ -99,16 +97,6 @@ class MyDriver(Driver):
         command.brake = brake
         command.clutch = clutch
 
-        # gear = self.convert_gear_value_back(prediction[0][3])
-        # command.gear = round(gear)
-
-
-        # TODO with this manual gear shifting below enabled the car doesn't drive good
-        # Remove gear from the model input and output and check difference in lap finishing time and driving
-
-        # print(carstate.speed_x / MPS_PER_KMH)
-        # Gear shifting logic
-        # if gear != -1:
         if carstate.gear != 0:
             if carstate.rpm > self.RPM_UPSHIFT and carstate.gear < 6:
                 command.gear = carstate.gear + 1
@@ -119,12 +107,7 @@ class MyDriver(Driver):
         else:
             command.gear = 1  # Start in first gear if neutral
 
-        # Check if should reverse
-        # Set reverse time at current time
-        # For a few seconds should reverse
-            
-
-        if -10 < carstate.speed_x / MPS_PER_KMH < 5 and carstate.distance_raced > 10:
+        if -5 < carstate.speed_x / MPS_PER_KMH < 5 and carstate.distance_raced > 10:
             if len([x for x in carstate.distances_from_edge if x <= 5]) >= 9:
                 if self.reverse_start_time is None:
                     self.reverse_start_time = time.time()
@@ -135,20 +118,6 @@ class MyDriver(Driver):
                     command.gear = 1
                 else:
                     self.reverse_start_time = None
-        # else:
-        #     self.reverse_start_time = None
-
-    #    # Logic to handle reverse gear
-    #     if carstate.gear == -1:
-    #         if self.reverse_start_time is None:
-    #             self.reverse_start_time = time.time()
-    #         elif time.time() - self.reverse_start_time > self.reverse_duration_limit:
-    #             command.gear = 1  # Switch to first gear after reverse duration limit
-    #     else:
-    #         self.reverse_start_time = None
-
-
-        # print(f"Accelerator={accel},{prediction[0][0]:.2f},\tBrake={prediction[0][1]:.2f},\tSteer={prediction[0][2]:.2f},\tgear={gear}")
 
         if self.data_logger:
             self.data_logger.log(carstate, command)
