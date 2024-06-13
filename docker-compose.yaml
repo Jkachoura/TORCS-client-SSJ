@@ -1,11 +1,14 @@
-version: "3.6"
-
 services:
-  torcs-agent:
+  torcs-agent2:
+    image: "ghcr.io/alxcnl/torcs-agent:3002"   
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: "team2"
+    environment:
+      - torcs-server=192.168.56.20
     command:
       - "--hostname"
       - "192.168.56.20"
-    image: "torcs-agent:240201"
     ports:
-      - "3002:3002/tcp"
+      - "3006:3002/udp"

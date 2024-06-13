@@ -4,17 +4,20 @@ FROM python:3.11.9-slim as base
 ENV LANG="C.UTF-8"
 RUN ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
 
-WORKDIR /app
-
-ADD models .
-ADD requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
 # Stage 2:
 # Copying the code to container
 FROM base as final
+
+WORKDIR /app
+
+# Non-root user
+USER 1001
+
 # Add torc-agent directory
 ADD torcs-agent .
+
+ADD requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python", "run.py", "--port", "3002"]
