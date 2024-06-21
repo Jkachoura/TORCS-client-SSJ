@@ -1,5 +1,0 @@
-numpy
-pandas
-pathlib
-scikit_learn
-torch==2.3.0

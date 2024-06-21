@@ -1,5 +1,5 @@
 services:
-  torcs-agent2:
+  SSJ:
     image: "ghcr.io/alxcnl/torcs-agent:3002"   
     build:
       context: .
@@ -11,4 +11,4 @@ services:
       - "--hostname"
       - "192.168.56.20"
     ports:
-      - "3006:3002/udp"
+      - "3006:3002"
