@@ -6,9 +6,11 @@ services:
       dockerfile: Dockerfile
     container_name: "team2"
     environment:
-      - torcs-server=192.168.56.20
+      - "torcs-server=host.docker.internal"
     command:
       - "--hostname"
-      - "192.168.56.20"
+      - "host.docker.internal"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
-      - "3006:3002"
+      - "3002:3002"

@@ -1,10 +1,8 @@
 import glob
-import logging
 import os
 import time
 
 import pandas as pd
-from pathlib import Path
 from pytocl.driver import Driver
 from pytocl.car import State, Command
 
@@ -14,12 +12,6 @@ import numpy as np
 
 from pytocl.pytorch_car_model import CarControlModel
 
-# Global variables
-scalarFile = "scalar_*.pkl" 
-scalarFilePath = Path.cwd().joinpath('models').joinpath(scalarFile)
-modelFile = "model_*.pth"
-modelFilePath = Path.cwd().joinpath('models').joinpath(modelFile)
-logging.basicConfig(level=logging.INFO)
 MPS_PER_KMH = 1000 / 3600  # Meters per second per kilometer per hour
 
 class MyDriver(Driver):
@@ -29,17 +21,18 @@ class MyDriver(Driver):
 
     def __init__(self, logdata=True):
         super().__init__(logdata)
-        logging.debug(f'Loading scalar from {scalarFilePath}')
+        latest_scaler_file = max(glob.glob('models/scaler_*.pkl'), key=os.path.getctime)
+        print(f'Loading scaler from {latest_scaler_file}')
 
-        with open(scalarFilePath, 'rb') as f:
-            self.scalar = pickle.load(f)
+        with open(latest_scaler_file, 'rb') as f:
+            self.scaler = pickle.load(f)
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.model = CarControlModel(67, 4).to(self.device)
 
-        logging.debug(f'Loading model from {modelFilePath}')
-        
-        self.model.load_state_dict(torch.load(modelFilePath, map_location=self.device))
+        latest_model_file = max(glob.glob('models/model_*.pth'), key=os.path.getctime)
+        print(f'Loading model from {latest_model_file}')
+        self.model.load_state_dict(torch.load(latest_model_file, map_location=self.device))
         self.model.eval()
 
         self.reverse_start_time = None  # Initialize reverse start time
@@ -84,7 +77,7 @@ class MyDriver(Driver):
         features['Z'] = [carstate.z]
 
         features_df = pd.DataFrame(features)
-        normalized_features = self.scalar.transform(features_df)
+        normalized_features = self.scaler.transform(features_df)
         tensor_features = torch.tensor(normalized_features, dtype=torch.float32).to(self.device)
 
         return tensor_features
