@@ -7,6 +7,12 @@ from torch.utils.data import DataLoader
 import os
 
 def load_and_prepare_data(data_folder):
+    """
+    Load and prepare data for training
+
+    Used CPU for data collection from:
+        https://github.com/CognitiaAI/TORCS-Self-Driving-Agent
+    """
     # Get list of files in new_data folder
     files = os.listdir(data_folder)
 
