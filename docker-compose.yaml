@@ -1,11 +1,13 @@
-version: "3.6"
-
 services:
-  torcs-agent:
+  torcs-agent2:
+    image: "ghcr.io/alxcnl/torcs-agent:3002"   
     container_name: "team2"
+    environment:
+      - "torcs-server=host.docker.internal"
     command:
       - "--hostname"
-      - "192.168.56.20"
-    image: "torcs-agent:240201"
+      - "host.docker.internal"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "3002:3002/tcp"
