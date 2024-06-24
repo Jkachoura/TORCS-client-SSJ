@@ -1,6 +1,9 @@
 services:
-  torcs-agent2:
+  SSJ:
     image: "ghcr.io/alxcnl/torcs-agent:3002"   
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: "team2"
     environment:
       - "torcs-server=host.docker.internal"

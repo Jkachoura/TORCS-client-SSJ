@@ -22,6 +22,7 @@ class MyDriver(Driver):
     def __init__(self, logdata=True):
         super().__init__(logdata)
         latest_scaler_file = max(glob.glob('models/scaler_*.pkl'), key=os.path.getctime)
+        print(f'Loading scaler from {latest_scaler_file}')
 
         with open(latest_scaler_file, 'rb') as f:
             self.scaler = pickle.load(f)
@@ -30,6 +31,7 @@ class MyDriver(Driver):
         self.model = CarControlModel(67, 4).to(self.device)
 
         latest_model_file = max(glob.glob('models/model_*.pth'), key=os.path.getctime)
+        print(f'Loading model from {latest_model_file}')
         self.model.load_state_dict(torch.load(latest_model_file, map_location=self.device))
         self.model.eval()
 
