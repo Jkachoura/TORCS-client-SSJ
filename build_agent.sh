@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # Author: J.A.Boogaard@hr.nl
 
-repo="docker.io"
+repo="ghcr.io/alxcnl"
 image_name="torcs-agent"
-
-# YearGroupVersion
-tag="240201"
+group="02"
+tag="30${group}"
 image="${repo}/${image_name}:${tag}"
 dockerfile="Dockerfile" 
 arch=$(uname -m)
