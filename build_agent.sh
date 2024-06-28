@@ -15,16 +15,9 @@ else
     action="load"
 fi
 
-function buildImage() {
-    printf "Build and %s image %s for %s\n" $action $image $arch;
-    cmd="docker buildx build --${action} --build-arg PLATFORM=${arch} -f ${dockerfile} -t $image ."
+if [[ "$action" -eq "push" ]]; then
+    cmd="docker buildx build --${action} --build-arg PLATFORM=amd64,arm64 -f ${dockerfile} -t $image ."
     echo $cmd
     eval $cmd
-}
 
-buildImage
-
-if [[ "$action" -eq "push" ]]; then
-    echo $image
-    cmd="docker tag $image ${repo}/${image_name}:latest"
 fi
